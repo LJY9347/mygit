@@ -1,0 +1,19 @@
+package com.itwill.inheritance04;
+
+/*
+ * final: 변경할 수 없는.
+ * final 지역변수: 값을 초기화한 이후에 그 값을 변경할 수 없는 (재할당할 수 없는) 지역 변수.
+ * final 필드: 반드시 한 번은 명시적으로 초기화해야 하고, 이후에는 값을 변경할 수 없는 필드.
+ *  (1) final 필드를 선언과 동시에 초기화 
+ *  (2) final 필드를 초기화 할 수 있는 아규먼트를 갖는 생성자를 작성.
+ * final 메서드: 변경할 수 없는 메서드.
+ * final 클래스: 변경할 수 없는 클래스.
+ */
+public class InheritanceMain04 {
+
+	public static void main(String[] args) {
+		
+
+	}
+
+}
