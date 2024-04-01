@@ -7,8 +7,18 @@ package com.itwill.inheritance04;
  *  (1) final 필드를 선언과 동시에 초기화 
  *  (2) final 필드를 초기화 할 수 있는 아규먼트를 갖는 생성자를 작성.
  * final 메서드: 변경할 수 없는 메서드. 재정의(override)할 수 없는 메서드.
- * final 클래스: 변경할 수 없는 클래스.
+ * final 클래스: 변경할 수 없는 클래스. 상속받을 수 없는 클래스.
+ * 	(예) java.lang.System, java.lang.String, ...
+ * 
+ * class MyString extends String {} -> final 클래스를 상속하는 새로운 클래스는 선언할 수 없음.
  */
+
+class C{}
+final class D{}
+
+class E extends C{}
+//class F extends D{}
+
 class A {
 	public void test1 () {
 		System.out.println("test1");
@@ -34,8 +44,8 @@ class B extends A {
 
 public class InheritanceMain04 {
 
-	public static void main(String[] args) {
-		
+	public static void main(final String[] args) {
+		// 파라미터 - 지역변수기 때문에 final 선언 가능.
 
 	}
 
