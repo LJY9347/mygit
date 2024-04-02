@@ -13,7 +13,7 @@ public class InheritanceMain06 {
 		System.out.println(p1 == p2); // stack 의 주소값이 같은지 비교. 무조건 false
 		// 객체의 동등비교에서는 비교 연산자(==, !=)를 사용하면 안됨. 비교 연산자는 기본타입 비교만.		
 		System.out.println(p1.equals(p2)); 
-
+		
 	}
 
 }
