@@ -24,6 +24,23 @@ public class InheritanceMain06 {
 		System.out.println("s1 == s2 결과: " + (s1 == s2)); // 주소 비교
 		System.out.println("s1.equals(s2) 결과: " + s1.equals(s2)); 
 		
+		User user1 = new User("admin","1234");
+		User user2 = new User ("admin","abcd");
+		User user3 = new User ();
+		
+		System.out.println(user1);
+		System.out.println(user2);
+		System.out.println(user3);
+		
+		System.out.println("user1 == user2: " + (user1 == user2));
+        System.out.println("user1.equals(user2): " + user1.equals(user2));
+        System.out.println("user1.equals(user3): " + user1.equals(user3));
+        System.out.println("user3.equals(user1): " + user3.equals(user1));
+        
+        System.out.println("user1 hash: " + user1.hashCode());
+        System.out.println("user2 hash: " + user2.hashCode());
+        System.out.println("user3 hash: " + user3.hashCode());
+		
 		
 	}
 
