@@ -26,7 +26,8 @@ public class ThisTest {
 	
 	public ThisTest(int g, int x) {
 		this(); // 현재 클래스의 다른 생성자를 호출하는 문장.
-		
+		this.g = g;
+		this.x = x;
 	}
 	public ThisTest(int x, int y, String name) {
 		this.x = x;
