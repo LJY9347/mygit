@@ -26,29 +26,41 @@ public class MemberDaoImple implements MemberDao {
 	
 	@Override
 	public int create(Member member) {
-		members[count] = member;
-		count++;
-		
-		return 1;
+		if (count < MAX_LENGTH) {
+			members[count] = member;
+			count++;
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
 
 	@Override
 	public Member[] read() {
-		
+		//배열 members에 null이 아닌 원소들로만 이루어진 배열을 리턴.
 		return members;
 	}
 
 	@Override
 	public Member read(int index) {
+		if (index < MAX_LENGTH && index >= 0) {
+			return members[index];
+		} else {
+			return null;
+		}
 		
-		return members[index];
 	}
 
 	@Override
 	public int update(int index, String password) {
-		members[index].setPassword(password);
-		
-		return 1;
+		if (index < MAX_LENGTH && index >= 0) {
+			members[index].setPassword(password);			
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
 
 }

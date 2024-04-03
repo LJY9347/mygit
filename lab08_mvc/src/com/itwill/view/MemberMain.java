@@ -54,8 +54,12 @@ public class MemberMain {
 		
 		System.out.print("수정할 인덱스>> ");
 		int index = Integer.parseInt(scanner.nextLine());
-		
+
 		Member member = dao.read(index);
+		if (member == null) {
+			System.out.println("해당 인덱스에는 정보가 없습니다.");
+			return;
+		}
 		System.out.println("수정 전: " + member);
 		
 		System.out.print("새 비밀번호>> ");
@@ -92,7 +96,11 @@ public class MemberMain {
 		System.out.println("\n--- 회원 목록 ---");
 		Member[] members = dao.read(); // View에서 Controller 기능을 사용, 출력할 데이터를 가져옴.
 		for (Member m : members) {
-			System.out.println(m);
+			if (m == null) {
+				return;
+			} else {
+				System.out.println(m);
+			}
 		}		
 	}
 
