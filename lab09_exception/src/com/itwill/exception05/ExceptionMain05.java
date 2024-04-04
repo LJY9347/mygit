@@ -28,6 +28,9 @@ public class ExceptionMain05 {
 			int y = Integer.parseInt(sc.nextLine());
 			
 			System.out.println("x / y = " + (x / y));
+			
+			int[] array = new int[0];
+			array[0] = 100;
 		} catch(NumberFormatException | ArithmeticException e) {
 			System.out.println(e.getMessage());
 		}
