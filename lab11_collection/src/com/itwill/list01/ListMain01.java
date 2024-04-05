@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /* 
  * Collection<E>
- * |__Lise<E>
+ * |__List<E>
  *    |__ArrayList<E>, LinkedList<E>
  * 
  * 리스트(list)의 특징:
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * 2. 값들을 저장할 때마다 인덱스는 자동으로 증가됨. (인덱스는 0부터 시작)
  * 3. 리스트 중간에 있는 값을 삭제하면 인덱스가 자동으로 재배열됨.
  * 4. 같은 값들을 여러번 저장할 수 있음 - Set<E>과 다른 점.
- * 5. Lise<E>에서 <E>는 리스트에 저장하는 원소(element)의 타입을 의미.
+ * 5. List<E>에서 <E>는 리스트에 저장하는 원소(element)의 타입을 의미.
  * 	  (주의) 원소 타입은 클래스 이름만 사용 가능. 기본 타입은 사용할 수 없음.
  * 	   기본 타입 대신에 wrapper 클래스를 사용.
  * 
