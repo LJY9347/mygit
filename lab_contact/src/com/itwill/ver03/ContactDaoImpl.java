@@ -20,16 +20,19 @@ public class ContactDaoImpl implements ContactDao {
 		return instance;
 	}
 
+	private int count = 0;
 	ArrayList<Contact> contacts = new ArrayList<Contact>();
 
-	private int count = 0;
+	public boolean isValidIndex(int index) {
+		return (index >= 0) && (index < contacts.size());
+	}
 
 	@Override
 	public int create(Contact contact) {
-		if (contacts.add(contact)) {
+		{
+			contacts.add(count, contact);
+			count++;
 			return 1;
-		} else {
-			return 0;
 		}
 
 	}
@@ -41,24 +44,33 @@ public class ContactDaoImpl implements ContactDao {
 
 	@Override
 	public Contact read(int index) {
-
-		return contacts.get(index);
+		if (isValidIndex(index)) {
+			return contacts.get(index);
+		} else {
+			return null;
+		}
 
 	}
 
 	@Override
 	public int update(int index, Contact contact) {
-
-		contacts.set(index, contact);
-		return 1;
+		if ((isValidIndex(index))) {
+			contacts.set(index, contact);
+			return 1;
+		} else {
+			return 0;
+		}
 
 	}
 
 	@Override
 	public int delete(int index) {
-
-		contacts.remove(index);
-		return 1;
+		if ((isValidIndex(index))) {
+			contacts.remove(index);
+			return 1;
+		} else {
+			return 0;
+		}
 
 	}
 

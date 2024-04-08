@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class ListMain01 {
 
 	public static void main(String[] args) {
-//		ArrayLise<int> a; - 불가능
+//		ArrayList<int> a; - 불가능
 		// 정수들을 저장하는 ArrayList를 생성.
 		ArrayList<Integer> numbers = new ArrayList<>(); // new ArrayList<Integer>();
 		// -> 생성자 호출에서는 ArrayList의 원소 타입을 생략할 수 있음.
@@ -68,7 +68,6 @@ public class ListMain01 {
 		
 		numbers.remove(Integer.valueOf(-100)); // remove(Object x): 같은 값을 갖는 원소를 찾아서 삭제.
 		System.out.println(numbers);
-		
 		// set (index, value) 자료 수정
 		
 	}

@@ -47,46 +47,50 @@ public class ContactMain03 {
 	}
 
 	private void deleteIndex() {
-		try {
-			System.out.print("삭제할 인덱스를 입력해주세요>>> ");
-			int index = inputInteger();
-			dao.delete(index);
-		} catch (Exception e) {
-			System.out.println("해당 인덱스에는 정보가 없습니다");
+
+		System.out.print("삭제할 인덱스를 입력해주세요>>> ");
+		int index = inputInteger();
+		
+		int result = dao.delete(index);
+		if (result == 1) {
+			System.out.println(">>> 연락처 삭제 성공");
+		} else {
+			System.out.println(">>> 연락처 삭제 실패.");
 		}
 	}
 
 	private void updateContactByIndex() {
-		try {
-			System.out.println("\n--- 연락처 수정 ---");
 
-			System.out.print("인덱스 입력>> ");
-			int index = inputInteger();
+		System.out.println("\n--- 연락처 수정 ---");
 
-			Contact old = dao.read(index);
-			System.out.println("수정전: " + old);
+		System.out.print("인덱스 입력>> ");
+		int index = inputInteger();
 
-			System.out.print("이름 수정>> ");
-			String name = scanner.nextLine();
-
-			System.out.print("전화번호 수정>> ");
-			String phone = scanner.nextLine();
-
-			System.out.print("이메일 수정>> ");
-			String email = scanner.nextLine();
-
-			old.setName(name);
-			old.setPhone(phone);
-			old.setEmail(email);
-
-			int result = dao.update(index, old);
-			if (result == 1) {
-				System.out.println(">>> 연락처 수정 성공");
-			} else {
-				System.out.println(">>> 연락처 수정 실패");
-			}
-		} catch (Exception e) {
+		Contact old = dao.read(index);
+		if (old == null) {
 			System.out.println("해당 인덱스에는 정보가 없습니다");
+			return;
+		}
+		System.out.println("수정전: " + old);
+
+		System.out.print("이름 수정>> ");
+		String name = scanner.nextLine();
+
+		System.out.print("전화번호 수정>> ");
+		String phone = scanner.nextLine();
+
+		System.out.print("이메일 수정>> ");
+		String email = scanner.nextLine();
+
+		old.setName(name);
+		old.setPhone(phone);
+		old.setEmail(email);
+
+		int result = dao.update(index, old);
+		if (result == 1) {
+			System.out.println(">>> 연락처 수정 성공");
+		} else {
+			System.out.println(">>> 연락처 수정 실패");
 		}
 
 	}
@@ -96,13 +100,11 @@ public class ContactMain03 {
 
 		System.out.print("인덱스 입력>> ");
 		int index = inputInteger();
-
-		try {
-			System.out.println(dao.read(index));
-
-		} catch (Exception e) {
+		if (dao.read(index) == null) {
 			System.out.println("해당 인덱스에는 정보가 없습니다.");
+			return;
 		}
+		System.out.println(dao.read(index));
 
 	}
 
