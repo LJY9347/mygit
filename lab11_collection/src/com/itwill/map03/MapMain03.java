@@ -40,6 +40,7 @@ public class MapMain03 {
 			} else {
 				wordCounts2.put(w, 1);
 			}
+			System.out.println(wordCounts2);
 		}
 
 	}
