@@ -41,7 +41,7 @@ public class FileMain05 {
 			  BufferedInputStream bis = new BufferedInputStream(in);	
 			  ObjectInputStream ois = new ObjectInputStream(bis);
 		){
-			list = (ArrayList) ois.readObject();
+			list = (ArrayList<Product>) ois.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
