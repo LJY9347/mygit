@@ -17,7 +17,6 @@ public class FileMain05 {
 		ArrayList<Product> list = new ArrayList<>();
 		for (int i = 0; i < 1_000_000; i++) {
 			list.add(new Product(i, "name_" + i, i));
-			System.out.println();
 		}
 		System.out.println("size = " + list.size());
 		
@@ -43,11 +42,13 @@ public class FileMain05 {
 			  ObjectInputStream ois = new ObjectInputStream(bis);
 		){
 			list = (ArrayList) ois.readObject();
-			System.out.print(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(list.get(1000));
+		System.out.println(list.get(50000));
+		System.out.println(list.get(100000));
+		System.out.println(list.get(999999));
 	}
 
 }
