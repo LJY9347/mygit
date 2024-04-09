@@ -20,8 +20,7 @@ public class ContactDaoImpl implements ContactDao {
 		return instance;
 	}
 
-	private int count = 0;
-	ArrayList<Contact> contacts = new ArrayList<Contact>();
+	public List<Contact> contacts = new ArrayList<Contact>();
 
 	public boolean isValidIndex(int index) {
 		return (index >= 0) && (index < contacts.size());
@@ -29,12 +28,8 @@ public class ContactDaoImpl implements ContactDao {
 
 	@Override
 	public int create(Contact contact) {
-		{
-			contacts.add(count, contact);
-			count++;
-			return 1;
-		}
-
+		contacts.add(contact);
+		return 1;
 	}
 
 	@Override

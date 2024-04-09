@@ -50,7 +50,7 @@ public class ContactMain03 {
 
 		System.out.print("삭제할 인덱스를 입력해주세요>>> ");
 		int index = inputInteger();
-		
+
 		int result = dao.delete(index);
 		if (result == 1) {
 			System.out.println(">>> 연락처 삭제 성공");
@@ -82,11 +82,9 @@ public class ContactMain03 {
 		System.out.print("이메일 수정>> ");
 		String email = scanner.nextLine();
 
-		old.setName(name);
-		old.setPhone(phone);
-		old.setEmail(email);
+		Contact contacts = new Contact(name, phone, email);
 
-		int result = dao.update(index, old);
+		int result = dao.update(index, contacts);
 		if (result == 1) {
 			System.out.println(">>> 연락처 수정 성공");
 		} else {
@@ -113,10 +111,8 @@ public class ContactMain03 {
 		List<Contact> contacts = dao.read();
 		int index = 0;
 		for (Contact c : contacts) {
-			if (c != null) {
-				System.out.println("[" + index + "] " + c);
-				index++;
-			}
+			System.out.println("[" + index + "] " + c);
+			index++;
 		}
 	}
 
