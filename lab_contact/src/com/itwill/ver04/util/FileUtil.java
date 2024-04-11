@@ -76,7 +76,7 @@ public class FileUtil {
      */
     public static void writeDataToFile(List<Contact> list) {
         File file = new File(DATA_DIR, DATA_FILE);
-        try (
+        try ( // 프로그램에서 파일에 데이터를 씀.
                 FileOutputStream out = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(out);
                 ObjectOutputStream oos = new ObjectOutputStream(bos);
