@@ -17,7 +17,7 @@ public class ContactMain04 {
 		System.out.println("*** 연락처 프로그램 v0.4 ***");
 
 		ContactMain04 app = new ContactMain04();
-
+		
 		boolean run = true;
 		while (run) {
 			int menu = app.selectMainMenu();
