@@ -101,7 +101,7 @@ public class AppMain04 {
         frame.getContentPane().add(btnMinus);
         
         btnMultiply = new JButton("x");
-        btnMultiply.addActionListener((e) -> handleButtonClick(e));
+        btnMultiply.addActionListener((e) -> handleButtonClick(e)); // 람다 표현식
         btnMultiply.setFont(new Font("D2Coding", Font.BOLD, 32));
         btnMultiply.setBounds(164, 158, 64, 64);
         frame.getContentPane().add(btnMultiply);
