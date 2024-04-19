@@ -1,13 +1,13 @@
-package com.itwill.ver04.controller;
+package com.itwill.ver05.controller;
 
 import java.util.List;
 
-import com.itwill.ver04.model.Contact;
+import com.itwill.ver05.model.Contact;
 
 // import static 문장: 클래스에서 public static으로 선언된 멤버(필드, 메서드)의 이름을 가져옴.
 
 // *; public static 으로 선언된 멤버를 모두 가져옴
-import static com.itwill.ver04.util.FileUtil.*;
+import static com.itwill.ver05.util.FileUtil.*;
 
 // MVC 아키텍쳐에서 Controller 역할 담당 클래스. DAO(Data Access Object).
 public class ContactDaoImpl implements ContactDao {
