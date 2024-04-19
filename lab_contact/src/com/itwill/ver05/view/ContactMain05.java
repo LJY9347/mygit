@@ -94,6 +94,9 @@ public class ContactMain05 implements CreateNotify,UpdateNotify {
         buttonPanel.add(btnDelete);
         
         btnSearch = new JButton("검색");
+        btnSearch.addActionListener((e) ->
+        		ContactSearchFrame.showContactSearchFrame(frame)
+        );
         btnSearch.setFont(new Font("D2Coding", Font.BOLD, 28));
         buttonPanel.add(btnSearch);
         
@@ -101,6 +104,15 @@ public class ContactMain05 implements CreateNotify,UpdateNotify {
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         
         table = new JTable();
+        
+        // 테이블 컬럼 이름의 폰트 설정
+        table.getTableHeader().setFont(new Font("D2Coding", Font.PLAIN, 28));
+        
+        // 테이블 데이터 행의 폰트 설정
+        table.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        // 테이블 행 높이(세로) 설정
+        table.setRowHeight(40);
+        
         model = new DefaultTableModel(null, COLUMN_NAMES);
         table.setModel(model);
         scrollPane.setViewportView(table);

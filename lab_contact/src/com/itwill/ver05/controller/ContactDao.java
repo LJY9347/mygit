@@ -51,5 +51,13 @@ public interface ContactDao {
      * @return 삭제 성공하면 1, 실패하면 0.
      */
     int delete(int index);
+    
+    /**
+     * 연락처 검색 기능.
+     * 검색어가 이름, 전화번호, 또는 이메일에 포함된 연락처 정보를 리스트에 넣어서 리턴.
+     * @param keyword 검색어(문자열).
+     * @return 연락처들의 리스트(List<Contact>)
+     */
+    List<Contact> search(String keword);
 
 }
