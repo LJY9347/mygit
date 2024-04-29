@@ -57,8 +57,8 @@ public class JdbcMain01 {
     	ResultSet rs = stmt.executeQuery();
     	while (rs.next()) { // ResultSet(테이블)에서 행(row)이 있는 지 검사
     		// 그 행의 컬럼들에 있는 값을 읽음:
-    		int id = rs.getInt(COL_ID); // 테이블의 ID 컬럼 값을 읽음.
-    		String title = rs.getString(COL_TITLE); // 테이블의 TITLE 컬럼 값을 읽음.
+    		int id = rs.getInt("id"); // 테이블의 ID 컬럼 값을 읽음.
+    		String title = rs.getString("TITLE"); // 테이블의 TITLE 컬럼 값을 읽음.
     		String content = rs.getString(COL_CONTENT);
     		String writer = rs.getString(COL_WRITER);
     		LocalDateTime createdTime = rs.getTimestamp(COL_CREATED_TIME).toLocalDateTime();
