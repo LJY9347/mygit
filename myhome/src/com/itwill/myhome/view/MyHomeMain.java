@@ -40,7 +40,7 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 	private JButton btnCreate;
 	private JButton btnDetails;
 	private JButton btnReadAll;
-	private JTextField textSearchJeyword;
+	private JTextField textSearchKeyword;
 	private JComboBox comboBox;
 	private DefaultTableModel tableModel;
 	private MyHomeDao dao = MyHomeDao.getInstance();
@@ -102,10 +102,7 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 		buttonPanel.setLayout(null);
 		
 		btnReadAll = new JButton("목록보기");
-		btnReadAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnReadAll.addActionListener((e) -> initializeTable());
 		btnReadAll.setFont(new Font("D2Coding", Font.PLAIN, 22));
 		btnReadAll.setBounds(35, 10, 125, 75);
 		buttonPanel.add(btnReadAll);
@@ -131,10 +128,8 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 		buttonPanel.add(btnDetails);
 		
 		btnDelete = new JButton("삭제");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnDelete.addActionListener((e) -> deleteMyHome());
+
 		btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 28));
 		btnDelete.setBounds(500, 10, 125, 75);
 		buttonPanel.add(btnDelete);
@@ -154,17 +149,14 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 		panel.setBounds(232, 11, 10, 10);
 		searchPanel.add(panel);
 		
-		textSearchJeyword = new JTextField();
-		textSearchJeyword.setFont(new Font("D2Coding", Font.PLAIN, 18));
-		textSearchJeyword.setBounds(188, 24, 290, 40);
-		searchPanel.add(textSearchJeyword);
-		textSearchJeyword.setColumns(10);
+		textSearchKeyword = new JTextField();
+		textSearchKeyword.setFont(new Font("D2Coding", Font.PLAIN, 18));
+		textSearchKeyword.setBounds(188, 24, 290, 40);
+		searchPanel.add(textSearchKeyword);
+		textSearchKeyword.setColumns(10);
 		
 		JButton btnSearch = new JButton("검색");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnSearch.addActionListener((e) -> search());
 		btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		btnSearch.setBounds(509, 14, 103, 58);
 		searchPanel.add(btnSearch);
@@ -199,19 +191,55 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 
 	@Override
 	public void notifyUpdateSuccess() {
-		
-		
+		initializeTable();
+        JOptionPane.showMessageDialog(frame, "업데이트 성공!");		
 	}
 
 	@Override
 	public void notifyCreateSuccess() {
 		initializeTable();
-        JOptionPane.showMessageDialog(frame, "새 블로그 등록 성공!");
+        JOptionPane.showMessageDialog(frame, "새 집정보 등록 성공!");
 		
 	}
-	
-	
-	
-	
-	
+	private void deleteMyHome() {
+        int index = table.getSelectedRow();
+        if (index == -1) { 
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "삭제할 행을 먼저 선택하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(
+                frame, 
+                "정말 삭제할까요?", 
+                "삭제 확인", 
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+        	int id = myhome.get(index).getId();
+        	int result = dao.delete(id);
+            if (result == 1) {
+                initializeTable(); 
+                JOptionPane.showMessageDialog(frame, "삭제 성공!");
+            } else {
+                JOptionPane.showMessageDialog(frame, "삭제 실패!");
+            }
+        }	
+	}
+	private void search() {
+        int type = comboBox.getSelectedIndex(); 
+        String keyword = textSearchKeyword.getText();
+        if (keyword.equals("")) {
+            JOptionPane.showMessageDialog(frame, 
+                    "검색어를 입력하세요.", 
+                    "경고", JOptionPane.WARNING_MESSAGE);
+            textSearchKeyword.requestFocus();            
+            return;
+        }
+        List<MyHome> blogs = dao.search(type, keyword);
+        resetTable(blogs);
+        textSearchKeyword.setText("");
+    }
 }

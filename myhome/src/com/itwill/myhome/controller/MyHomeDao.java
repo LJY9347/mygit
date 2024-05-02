@@ -138,14 +138,113 @@ private static MyHomeDao instance = null;
     	String way = rs.getString(COL_WAY);
     	String feet = rs.getString(COL_FEET);
     	String room_count = rs.getString(COL_ROOM_COUNT);
+    	String content = rs.getString(COL_CONTENT);
     	boolean option1 = rs.getBoolean(COL_OPTION1);
     	boolean option2 = rs.getBoolean(COL_OPTION2);
     	boolean option3 = rs.getBoolean(COL_OPTION3);
     	boolean option4 = rs.getBoolean(COL_OPTION4);
     	boolean option5 = rs.getBoolean(COL_OPTION5);
     	
-    	MyHome myhome = new MyHome(id, address, way, feet, room_count, room_count, option1, option2, option3, option4, option5);
+    	MyHome myhome = new MyHome(id, address, way, feet, room_count, content, option1, option2, option3, option4, option5);
     	return myhome;
+    }
+    private static final String SQL_DELETE = String.format(
+            "delete from %s where %s = ?", 
+            TBL_MyHOME, COL_ID);
+    
+    public int delete (int id) {
+    	int result = 0;
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+    	
+    	try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			stmt = conn.prepareStatement(SQL_DELETE);
+			stmt.setInt(1, id);
+			result = stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt, null);
+		}  	
+    	return result;
+    }
+    private static final String SQL_UPDATE = String.format(
+            "update %s set %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? where %s = ? ", 
+            TBL_MyHOME, COL_ADDRESS, COL_WAY, COL_FEET, COL_ROOM_COUNT , COL_CONTENT, COL_OPTION1, COL_OPTION2, COL_OPTION3, COL_OPTION4, COL_OPTION5,
+            COL_ID);
+    
+    public int update(MyHome myhome,int id) {
+    	int result = 0;
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+    	try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			stmt = conn.prepareStatement(SQL_UPDATE);
+			stmt.setString(1, myhome.getAddress());
+			stmt.setString(2, myhome.getWay());
+			stmt.setString(3, myhome.getFeet());
+			stmt.setString(4, myhome.getRoom_count());
+			stmt.setString(5, myhome.getContent());
+			stmt.setBoolean(6, myhome.isOption1());
+			stmt.setBoolean(7, myhome.isOption2());
+			stmt.setBoolean(8, myhome.isOption3());
+			stmt.setBoolean(9, myhome.isOption4());
+			stmt.setBoolean(10, myhome.isOption5());
+			stmt.setInt(11, id);
+			
+			result = stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt, null);
+		}
+	
+    	return result;
+    }
+    
+    private static final String SQL_SELECT_BY_ADDRESS = String.format(
+    		"select * from %s where lower(%s) like ?", 
+    		TBL_MyHOME,COL_ADDRESS);
+    
+    private static final String SQL_SELECT_BY_FEET = String.format(
+    		"select * from %s where lower(%s) like ?", 
+    		TBL_MyHOME,COL_FEET);
+    public List<MyHome> search(int type, String keyword){
+    	List<MyHome> result = new ArrayList<MyHome>();
+    	
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	String searchKeyword = "%" + keyword.toLowerCase() + "%";
+    	try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			switch(type) {
+			case 0:
+				stmt = conn.prepareStatement(SQL_SELECT_BY_ADDRESS);
+				stmt.setString(1, searchKeyword);
+				break;
+			
+			case 1:
+				stmt = conn.prepareStatement(SQL_SELECT_BY_FEET);
+				stmt.setString(1, searchKeyword);
+				break;
+					
+			}
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				MyHome myhome = makeMyHomeFromResultSet(rs);
+				result.add(myhome);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt, rs);
+		}
+    	
+    	
+    	return result;
     }
     
 }

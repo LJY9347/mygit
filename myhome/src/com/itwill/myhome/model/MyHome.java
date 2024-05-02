@@ -10,6 +10,7 @@ public class MyHome {
 		public static final String COL_FEET = "FEET";
 		public static final String COL_ROOM_COUNT = "ROOM_COUNT";
 		public static final String COL_CONTENT = "CONTENT";	
+		
 		public static final String COL_OPTION1 = "OPTION1";
 		public static final String COL_OPTION2 = "OPTION2";
 		public static final String COL_OPTION3 = "OPTION3";

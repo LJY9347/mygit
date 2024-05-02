@@ -79,7 +79,15 @@ public class MyHomeCreateFrame extends JFrame {
 	public void initialize() {
 		setTitle("새 집추가");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 650);
+		
+		int x = 0;
+		int y = 0;
+		if (parent != null) {
+			x = parent.getX(); 
+			y = parent.getY(); 
+		}
+		
+		setBounds(x, y, 600, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -208,7 +216,7 @@ public class MyHomeCreateFrame extends JFrame {
 		int result = dao.create(myhome);
 		if (result == 1) {
 			app.notifyCreateSuccess();
-			dispose(); // 현재 창 닫기
+			dispose();
 		} else {
 			JOptionPane.showMessageDialog(MyHomeCreateFrame.this, "INSERT 실패");
 		}
