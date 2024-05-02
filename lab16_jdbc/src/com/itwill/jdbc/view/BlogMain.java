@@ -230,14 +230,14 @@ public class BlogMain implements CreateNotify, UpdateNotify {
     public void notifyCreateSuccess() {
         // 테이블에 insert 성공했을 때 BlogCreateFrame이 호출하는 메서드.
         initializeTable();
-        JOptionPane.showMessageDialog(frame, "새 블로그 등록 성공!");
+        JOptionPane.showMessageDialog(frame, "새 집 등록 성공!");
     }
 
     @Override
     public void notifyUpdateSuccess() {
         // 테이블에 update 성공했을 때 BlogDetailsFrame이 호출하는 메서드.
         initializeTable();
-        JOptionPane.showMessageDialog(frame, "블로그 업데이트 성공!");
+        JOptionPane.showMessageDialog(frame, "집 정보 수정 성공!");
     }
     
 }
