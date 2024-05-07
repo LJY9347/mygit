@@ -44,9 +44,8 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 	private JComboBox comboBox;
 	private DefaultTableModel tableModel;
 	private MyHomeDao dao = MyHomeDao.getInstance();
-	private int x = 0;
 	private List<MyHome> myhome;
-	
+	int x= 0;
 	/**
 	 * Launch the application.
 	 */
