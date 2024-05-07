@@ -45,7 +45,6 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
 	private DefaultTableModel tableModel;
 	private MyHomeDao dao = MyHomeDao.getInstance();
 	private List<MyHome> myhome;
-	int x= 0;
 	/**
 	 * Launch the application.
 	 */
@@ -237,8 +236,8 @@ public class MyHomeMain implements UpdateNotify,CreateNotify {
             textSearchKeyword.requestFocus();            
             return;
         }
-        List<MyHome> blogs = dao.search(type, keyword);
-        resetTable(blogs);
+        myhome = dao.search(type, keyword);
+        resetTable(myhome);
         textSearchKeyword.setText("");
     }
 }

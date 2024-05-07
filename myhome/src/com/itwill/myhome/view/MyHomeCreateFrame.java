@@ -23,7 +23,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class MyHomeCreateFrame extends JFrame {
 	
@@ -55,6 +57,9 @@ public class MyHomeCreateFrame extends JFrame {
 	private MyHomeDao dao = MyHomeDao.getInstance();
 	private Component parent;
 	private CreateNotify app;
+	private JLabel lblAddress_1;
+	private JComboBox comboBoxCity;
+	private JComboBox comboBoxBorough;
 	
 	public static void showMyHomeCreateFrame(Component parent, CreateNotify app) {
 		EventQueue.invokeLater(new Runnable() {
@@ -87,65 +92,65 @@ public class MyHomeCreateFrame extends JFrame {
 			y = parent.getY(); 
 		}
 		
-		setBounds(x, y, 600, 650);
+		setBounds(x, y, 600, 686);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		getContentPane().setLayout(null);
 
-		lblAddress = new JLabel("주소");
+		lblAddress = new JLabel("상세주소");
 		lblAddress.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAddress.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblAddress.setBounds(12, 10, 100, 40);
+		lblAddress.setBounds(29, 114, 100, 40);
 		getContentPane().add(lblAddress);
 
 		textAddress = new JTextField();
-		textAddress.setBounds(12, 60, 540, 40);
+		textAddress.setBounds(176, 116, 376, 40);
 		getContentPane().add(textAddress);
 		textAddress.setColumns(10);
 
 		lblWay = new JLabel("방향");
 		lblWay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWay.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblWay.setBounds(12, 110, 70, 40);
+		lblWay.setBounds(12, 166, 70, 40);
 		getContentPane().add(lblWay);
 
 		lblRoom = new JLabel("방 개수");
 		lblRoom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRoom.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblRoom.setBounds(176, 110, 70, 40);
+		lblRoom.setBounds(176, 166, 70, 40);
 		getContentPane().add(lblRoom);
 
 		lblFeet = new JLabel("평수");
 		lblFeet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFeet.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblFeet.setBounds(340, 110, 70, 40);
+		lblFeet.setBounds(337, 166, 70, 40);
 		getContentPane().add(lblFeet);
 
 		textWay = new JTextField();
-		textWay.setBounds(94, 110, 70, 40);
+		textWay.setBounds(94, 168, 70, 40);
 		getContentPane().add(textWay);
 		textWay.setColumns(10);
 
 		textRoomCount = new JTextField();
 		textRoomCount.setColumns(10);
-		textRoomCount.setBounds(258, 112, 70, 40);
+		textRoomCount.setBounds(258, 168, 70, 40);
 		getContentPane().add(textRoomCount);
 
 		textFeet = new JTextField();
 		textFeet.setColumns(10);
-		textFeet.setBounds(422, 110, 70, 40);
+		textFeet.setBounds(421, 168, 70, 40);
 		getContentPane().add(textFeet);
 
 		lblOption = new JLabel("옵션");
 		lblOption.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOption.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblOption.setBounds(258, 162, 70, 40);
+		lblOption.setBounds(258, 207, 70, 40);
 		getContentPane().add(lblOption);
 
 		cbPanel = new JPanel();
-		cbPanel.setBounds(12, 212, 540, 40);
+		cbPanel.setBounds(12, 257, 540, 40);
 		getContentPane().add(cbPanel);
 
 		cbWasher = new JCheckBox("세탁기");
@@ -169,7 +174,7 @@ public class MyHomeCreateFrame extends JFrame {
 		cbPanel.add(cbInduction);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 262, 540, 280);
+		scrollPane.setBounds(12, 307, 540, 280);
 		getContentPane().add(scrollPane);
 
 		textContent = new JTextArea();
@@ -184,7 +189,7 @@ public class MyHomeCreateFrame extends JFrame {
 			}
 		});
 		btnSave.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		btnSave.setBounds(134, 561, 100, 40);
+		btnSave.setBounds(131, 597, 100, 40);
 		getContentPane().add(btnSave);
 
 		btnCancel = new JButton("취소");
@@ -194,8 +199,40 @@ public class MyHomeCreateFrame extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		btnCancel.setBounds(319, 561, 100, 40);
+		btnCancel.setBounds(318, 597, 100, 40);
 		getContentPane().add(btnCancel);
+		
+		lblAddress_1 = new JLabel("주소");
+		lblAddress_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAddress_1.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		lblAddress_1.setBounds(29, 38, 73, 40);
+		contentPane.add(lblAddress_1);
+		
+		comboBoxCity = new JComboBox();
+		comboBoxCity.setBounds(131, 38, 165, 33);
+		List<String> cities = dao.getcities();
+		for(String s : cities) {
+			comboBoxCity.addItem(s);
+		}
+		contentPane.add(comboBoxCity);
+		
+		comboBoxBorough = new JComboBox();
+		comboBoxCity.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedCity = (String) comboBoxCity.getSelectedItem();
+				if (selectedCity != null) {
+					List<String> boroughs = dao.getborough(selectedCity);
+					comboBoxBorough.removeAllItems();
+					for (String s : boroughs) {
+						comboBoxBorough.addItem(s);
+			}
+		}
+			}
+		});
+
+		comboBoxBorough.setBounds(318, 38, 234, 33);
+		contentPane.add(comboBoxBorough);
 	}
 
 	
@@ -211,8 +248,15 @@ public class MyHomeCreateFrame extends JFrame {
 		boolean option3 = cbAir.isSelected();
 		boolean option4 = cbOven.isSelected();
 		boolean option5 = cbInduction.isSelected();
+		String city = (String) comboBoxCity.getSelectedItem();
+		String borough = (String) comboBoxBorough.getSelectedItem();
 		
-		MyHome myhome = new MyHome(0, address, way, feet, roomcount, content, option1, option2, option3, option4, option5);
+		if (address.equals("")) {
+			JOptionPane.showMessageDialog(MyHomeCreateFrame.this, "주소는 반드시 입력해야 합니다!", "경고",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		MyHome myhome = new MyHome(0, address, way, feet, roomcount, content, option1, option2, option3, option4, option5, city, borough);
 		int result = dao.create(myhome);
 		if (result == 1) {
 			app.notifyCreateSuccess();
@@ -220,6 +264,25 @@ public class MyHomeCreateFrame extends JFrame {
 		} else {
 			JOptionPane.showMessageDialog(MyHomeCreateFrame.this, "INSERT 실패");
 		}
+		
 	}
 	
-}
+//	private void citiesList() {
+//		List<String> cities = dao.getcities();
+//		for(String city : cities) {
+//			comboBoxCity.addItem(city);
+//		}
+//	
+//	}
+//	private void boroughsList(String city) {
+//		comboBoxBorough.removeAllItems();
+//		List<String> boroughs = dao.getborough(city);
+//		for(String borough : boroughs) {
+//			comboBoxBorough.addItem(borough);
+//		}
+//		
+//	}
+	
+	
+		};
+

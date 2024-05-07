@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JComboBox;
 
 public class MyHomeDetailsFrame extends JFrame {
 	public interface UpdateNotify {
@@ -56,6 +57,9 @@ public class MyHomeDetailsFrame extends JFrame {
 	private JLabel lblFeet;
 	private List<MyHome> myhome;
 	private JTextArea textContent;
+	private JLabel lblAddress_1;
+	private JComboBox comboBoxCity;
+	private JComboBox comboBoxBorough;
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +67,7 @@ public class MyHomeDetailsFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MyHomeDetailsFrame frame = new MyHomeDetailsFrame(parent,MyHomeId,app);
+					MyHomeDetailsFrame frame = new MyHomeDetailsFrame(parent, MyHomeId,app);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +75,7 @@ public class MyHomeDetailsFrame extends JFrame {
 			}
 		});
 	}
-	public MyHomeDetailsFrame(Component parent,int MyHomeId, UpdateNotify app) {
+	public MyHomeDetailsFrame(Component parent, int MyHomeId, UpdateNotify app) {
 		this.parent = parent;
 		this.MyHomeId = MyHomeId;
 		this.app = app;
@@ -94,65 +98,65 @@ public class MyHomeDetailsFrame extends JFrame {
 			y = parent.getY(); 
 		}
 		
-		setBounds(x, y, 450, 650);
+		setBounds(x, y, 450, 674);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblAddress = new JLabel("주소");
+		lblAddress = new JLabel("상세주소");
 		lblAddress.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAddress.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblAddress.setBounds(0, 10, 90, 40);
+		lblAddress.setBounds(12, 95, 90, 40);
 		contentPane.add(lblAddress);
 		
 		textAddress = new JTextField();
 		textAddress.setColumns(10);
-		textAddress.setBounds(102, 12, 313, 40);
+		textAddress.setBounds(114, 95, 272, 40);
 		contentPane.add(textAddress);
 		
 		lblWay = new JLabel("방향");
 		lblWay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWay.setFont(new Font("D2Coding", Font.PLAIN, 18));
-		lblWay.setBounds(12, 60, 50, 40);
+		lblWay.setBounds(12, 145, 50, 40);
 		contentPane.add(lblWay);
 		
 		textWay = new JTextField();
 		textWay.setColumns(10);
-		textWay.setBounds(74, 62, 50, 40);
+		textWay.setBounds(74, 147, 50, 40);
 		contentPane.add(textWay);
 		
 		lblRoom = new JLabel("방 개수");
 		lblRoom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRoom.setFont(new Font("D2Coding", Font.PLAIN, 18));
-		lblRoom.setBounds(136, 60, 63, 40);
+		lblRoom.setBounds(135, 145, 63, 40);
 		contentPane.add(lblRoom);
 		
 		textRoomCount = new JTextField();
 		textRoomCount.setColumns(10);
-		textRoomCount.setBounds(211, 62, 50, 40);
+		textRoomCount.setBounds(210, 147, 50, 40);
 		contentPane.add(textRoomCount);
 		
 		lblFeet = new JLabel("평수");
 		lblFeet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFeet.setFont(new Font("D2Coding", Font.PLAIN, 18));
-		lblFeet.setBounds(273, 62, 50, 40);
+		lblFeet.setBounds(272, 147, 50, 40);
 		contentPane.add(lblFeet);
 		
 		textFeet = new JTextField();
 		textFeet.setColumns(10);
-		textFeet.setBounds(335, 62, 50, 40);
+		textFeet.setBounds(336, 149, 50, 40);
 		contentPane.add(textFeet);
 		
 		lblOption = new JLabel("옵션");
 		lblOption.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOption.setFont(new Font("D2Coding", Font.PLAIN, 18));
-		lblOption.setBounds(172, 110, 63, 40);
+		lblOption.setBounds(175, 183, 63, 40);
 		contentPane.add(lblOption);
 		
 		panel = new JPanel();
-		panel.setBounds(12, 160, 410, 40);
+		panel.setBounds(12, 233, 410, 40);
 		contentPane.add(panel);
 		
 		cbWasher = new JCheckBox("세탁기");
@@ -177,14 +181,14 @@ public class MyHomeDetailsFrame extends JFrame {
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(12, 210, 403, 292);
+		scrollPane.setBounds(12, 283, 403, 292);
 		contentPane.add(scrollPane);
 		
 		textContent = new JTextArea();
+		scrollPane.setViewportView(textContent);
 		textContent.setLineWrap(true);
 		textContent.setWrapStyleWord(true);
 		textContent.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		scrollPane.setViewportView(textContent);
 		
 		btnUpdate = new JButton("수정");
 		btnUpdate.addActionListener(new ActionListener() {
@@ -195,7 +199,7 @@ public class MyHomeDetailsFrame extends JFrame {
 
 			
 		btnUpdate.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		btnUpdate.setBounds(74, 533, 100, 40);
+		btnUpdate.setBounds(74, 585, 100, 40);
 		contentPane.add(btnUpdate);
 		
 		btnCancel = new JButton("취소");
@@ -205,8 +209,40 @@ public class MyHomeDetailsFrame extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		btnCancel.setBounds(252, 533, 100, 40);
+		btnCancel.setBounds(250, 585, 100, 40);
 		contentPane.add(btnCancel);
+		
+		lblAddress_1 = new JLabel("주소");
+		lblAddress_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAddress_1.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		lblAddress_1.setBounds(12, 27, 73, 40);
+		contentPane.add(lblAddress_1);
+		
+		comboBoxCity = new JComboBox();
+		
+		comboBoxCity.setBounds(114, 37, 110, 23);
+		List<String> cities = dao.getcities();
+		for(String s : cities) {
+			comboBoxCity.addItem(s);
+		}
+		contentPane.add(comboBoxCity);
+		
+		comboBoxBorough = new JComboBox();
+		comboBoxCity.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedCity = (String) comboBoxCity.getSelectedItem();
+				if (selectedCity != null) {
+					List<String> boroughs = dao.getborough(selectedCity);
+					comboBoxBorough.removeAllItems();
+					for (String s : boroughs) {
+						comboBoxBorough.addItem(s);
+			}
+		}
+			}
+		});
+		comboBoxBorough.setBounds(250, 37, 165, 23);
+		contentPane.add(comboBoxBorough);
 	}
 	private void initializeMyHome() {
 		MyHome myhome = dao.read(MyHomeId);
@@ -222,6 +258,8 @@ public class MyHomeDetailsFrame extends JFrame {
 		cbAir.setSelected(myhome.isOption3());
 		cbOven.setSelected(myhome.isOption4());
 		cbInduction.setSelected(myhome.isOption5());
+		comboBoxCity.setSelectedItem(myhome.getCity());
+		comboBoxBorough.setSelectedItem(myhome.getBorough());
 	}
 	private void updateMyHome(int id) {
 		String address = textAddress.getText();
@@ -234,8 +272,10 @@ public class MyHomeDetailsFrame extends JFrame {
         boolean option3 = cbAir.isSelected();
         boolean option4 = cbOven.isSelected();
         boolean option5 = cbInduction.isSelected();
+        String city = (String) comboBoxCity.getSelectedItem();
+        String borough = (String) comboBoxBorough.getSelectedItem();
         
-        MyHome myhome = new MyHome(id, address, way, feet, roomcount, content, option1, option2, option3, option4, option5);
+        MyHome myhome = new MyHome(id, address, way, feet, roomcount, content, option1, option2, option3, option4, option5, city, borough);
 		int result = dao.update(myhome,id);
         if (result == 1) {
             app.notifyUpdateSuccess();

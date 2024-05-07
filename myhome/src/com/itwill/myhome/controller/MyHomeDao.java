@@ -22,7 +22,6 @@ private static MyHomeDao instance = null;
     
     private MyHomeDao() {
         try {
-            // Oracle 드라이버(라이브러리)를 등록.
             DriverManager.registerDriver(new OracleDriver());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,6 +35,7 @@ private static MyHomeDao instance = null;
         
         return instance;
     }
+    private List<MyHome> myhome;
 
     private void closeResources(Connection conn, Statement stmt, ResultSet rs) {
         try {
@@ -48,8 +48,9 @@ private static MyHomeDao instance = null;
     }
     
     private static final String SQL_INSERT = String.format(
-    		"insert into %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-    		TBL_MyHOME, COL_ADDRESS, COL_WAY, COL_FEET, COL_ROOM_COUNT, COL_CONTENT, COL_OPTION1, COL_OPTION2, COL_OPTION3,COL_OPTION4,COL_OPTION5);
+    		"insert into %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+    		TBL_MyHOME, COL_ADDRESS, COL_WAY, COL_FEET, COL_ROOM_COUNT, 
+    		COL_CONTENT, COL_OPTION1, COL_OPTION2, COL_OPTION3,COL_OPTION4,COL_OPTION5,COL_CITY,COL_BOROUGH);
     public int create(MyHome myhome) {
     	int result = 0;
     	Connection conn = null;
@@ -67,6 +68,8 @@ private static MyHomeDao instance = null;
 			stmt.setBoolean(8, myhome.isOption3());
 			stmt.setBoolean(9, myhome.isOption4());
 			stmt.setBoolean(10, myhome.isOption5());
+			stmt.setString(11, myhome.getCity());
+			stmt.setString(12, myhome.getBorough());
 			result = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,8 +147,10 @@ private static MyHomeDao instance = null;
     	boolean option3 = rs.getBoolean(COL_OPTION3);
     	boolean option4 = rs.getBoolean(COL_OPTION4);
     	boolean option5 = rs.getBoolean(COL_OPTION5);
+    	String city = rs.getString(COL_CITY);
+    	String borough = rs.getString(COL_BOROUGH);
     	
-    	MyHome myhome = new MyHome(id, address, way, feet, room_count, content, option1, option2, option3, option4, option5);
+    	MyHome myhome = new MyHome(id, address, way, feet, room_count, content, option1, option2, option3, option4, option5, city, borough);
     	return myhome;
     }
     private static final String SQL_DELETE = String.format(
@@ -170,9 +175,9 @@ private static MyHomeDao instance = null;
     	return result;
     }
     private static final String SQL_UPDATE = String.format(
-            "update %s set %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? where %s = ? ", 
+            "update %s set %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? where %s = ? ", 
             TBL_MyHOME, COL_ADDRESS, COL_WAY, COL_FEET, COL_ROOM_COUNT , COL_CONTENT, COL_OPTION1, COL_OPTION2, COL_OPTION3, COL_OPTION4, COL_OPTION5,
-            COL_ID);
+            COL_CITY, COL_BOROUGH, COL_ID);
     
     public int update(MyHome myhome,int id) {
     	int result = 0;
@@ -191,8 +196,9 @@ private static MyHomeDao instance = null;
 			stmt.setBoolean(8, myhome.isOption3());
 			stmt.setBoolean(9, myhome.isOption4());
 			stmt.setBoolean(10, myhome.isOption5());
-			stmt.setInt(11, id);
-			
+			stmt.setString(11, myhome.getCity());
+			stmt.setString(12, myhome.getBorough());
+			stmt.setInt(13, id);
 			result = stmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -204,13 +210,14 @@ private static MyHomeDao instance = null;
     	return result;
     }
     
-    private static final String SQL_SELECT_BY_ADDRESS = String.format(
-    		"select * from %s where lower(%s) like ?", 
-    		TBL_MyHOME,COL_ADDRESS);
+    private static final String SQL_SELECT_BY_CITY = String.format(
+    	    "select * from %s where lower(%s) like ? or lower(%s) like ? or lower(%s) like ? ", 
+    	    TBL_MyHOME,COL_ADDRESS ,COL_CITY, COL_BOROUGH);
     
     private static final String SQL_SELECT_BY_FEET = String.format(
     		"select * from %s where lower(%s) like ?", 
     		TBL_MyHOME,COL_FEET);
+
     public List<MyHome> search(int type, String keyword){
     	List<MyHome> result = new ArrayList<MyHome>();
     	
@@ -222,15 +229,17 @@ private static MyHomeDao instance = null;
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			switch(type) {
 			case 0:
-				stmt = conn.prepareStatement(SQL_SELECT_BY_ADDRESS);
+				stmt = conn.prepareStatement(SQL_SELECT_BY_CITY);
 				stmt.setString(1, searchKeyword);
+				stmt.setString(2, searchKeyword);
+				stmt.setString(3, searchKeyword);
 				break;
 			
 			case 1:
 				stmt = conn.prepareStatement(SQL_SELECT_BY_FEET);
 				stmt.setString(1, searchKeyword);
 				break;
-					
+
 			}
 			rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -246,5 +255,60 @@ private static MyHomeDao instance = null;
     	
     	return result;
     }
+    
+    private static final String SQL_SELECT_CITY = "select distinct city from country";
+    public List<String> getcities(){
+    	List<String> cities = new ArrayList<>();
+    	
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	
+    	
+    	try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			stmt = conn.prepareStatement(SQL_SELECT_CITY);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				String city = rs.getString(COL_CITY);
+				cities.add(city);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	finally {
+			closeResources(conn, stmt, rs);
+		}
+    	return cities;
+    }
+    
+    private static final String SQL_SELECT_BOROUGH = "select borough from country where city = ? order by borough";
+    public List<String> getborough(String city){
+    	List<String> borough = new ArrayList<String>();
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			stmt = conn.prepareStatement(SQL_SELECT_BOROUGH);
+			stmt.setString(1, city);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				String boroughs = rs.getString(COL_BOROUGH);
+				borough.add(boroughs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt, rs);
+		}
+    	
+    	
+    	
+    	return borough;
+    }
+    
+    
     
 }

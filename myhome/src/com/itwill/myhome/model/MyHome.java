@@ -10,12 +10,13 @@ public class MyHome {
 		public static final String COL_FEET = "FEET";
 		public static final String COL_ROOM_COUNT = "ROOM_COUNT";
 		public static final String COL_CONTENT = "CONTENT";	
-		
 		public static final String COL_OPTION1 = "OPTION1";
 		public static final String COL_OPTION2 = "OPTION2";
 		public static final String COL_OPTION3 = "OPTION3";
 		public static final String COL_OPTION4 = "OPTION4";
 		public static final String COL_OPTION5 = "OPTION5";
+		public static final String COL_CITY = "CITY";
+		public static final String COL_BOROUGH = "BOROUGH";
 		
 	}
 	
@@ -30,11 +31,11 @@ public class MyHome {
 	private boolean option3;
 	private boolean option4;
 	private boolean option5;
+	private String city;
+	private String borough;
 	
-	public MyHome() {}
-
 	public MyHome(int id, String address, String way, String feet, String room_count, String content, boolean option1,
-			boolean option2, boolean option3, boolean option4, boolean option5) {
+			boolean option2, boolean option3, boolean option4, boolean option5, String city, String borough) {
 		this.id = id;
 		this.address = address;
 		this.way = way;
@@ -46,9 +47,27 @@ public class MyHome {
 		this.option3 = option3;
 		this.option4 = option4;
 		this.option5 = option5;
+		this.city = city;
+		this.borough = borough;
 	}
 
+	public String getCity() {
+		return city;
+	}
 
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getBorough() {
+		return borough;
+	}
+
+	public void setBorough(String borough) {
+		this.borough = borough;
+	}
+
+	public MyHome() {}
 
 	public boolean isOption1() {
 		return option1;
@@ -142,7 +161,8 @@ public class MyHome {
 	public String toString() {
 		return "MyHome [id=" + id + ", address=" + address + ", way=" + way + ", feet=" + feet + ", room_count="
 				+ room_count + ", content=" + content + ", option1=" + option1 + ", option2=" + option2 + ", option3="
-				+ option3 + ", option4=" + option4 + ", option5=" + option5 + "]";
+				+ option3 + ", option4=" + option4 + ", option5=" + option5 + ", city=" + city + ", borough=" + borough
+				+ "]";
 	}
 
 	
